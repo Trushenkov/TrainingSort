@@ -17,12 +17,12 @@ public class Main {
 
     private static final String INPUT_FILE = "input.txt";
     private static final String OUTPUT_FILE = "output.txt";
-    private static final String REGEX_FOR_SPLIT = " ";
+    private static final String REGEX = " ";
 
     public static void main(String[] args) {
         ArrayList<Integer> arrayList = readFromFile();
         System.out.println("Исходный массив: " + arrayList);
-        sortNumbersByFrequency(arrayList);
+        sortArrayByFrequency(arrayList);
         System.out.println("Отсортированный массив: " + arrayList);
         writeArrayToFile(arrayList);
     }
@@ -38,7 +38,7 @@ public class Main {
             String string;
             String[] splitString;
             while ((string = reader.readLine()) != null) {
-                splitString = string.split(REGEX_FOR_SPLIT);
+                splitString = string.split(REGEX);
                 for (String aSplitString : splitString) {
                     arrayList.add(Integer.parseInt(aSplitString));
                 }
@@ -51,15 +51,15 @@ public class Main {
 
 
     /**
-     * Сортирует ArrayList of Integer по частоте появления в нём чисел в порядке убывания.
+     * Сортирует ArrayList по частоте повторения в нём чисел в порядке убывания.
      *
-     * @param array ArrayList of Integer, который необходимо отсортировать
+     * @param array список, который нужно отсортировать
      */
-    private static void sortNumbersByFrequency(ArrayList<Integer> array) {
-        ArrayList<NumberWithFrequency> numbersContainer = new ArrayList<>();
+    private static void sortArrayByFrequency(ArrayList<Integer> array) {
+        ArrayList<NumberWithFrequency> tmpArrayList = new ArrayList<>();
         for (int num : array) {
             boolean foundedRepeat = false;
-            for (NumberWithFrequency currentNumber : numbersContainer) {
+            for (NumberWithFrequency currentNumber : tmpArrayList) {
                 if (num == currentNumber.value) {
                     foundedRepeat = true;
                     currentNumber.frequency++;
@@ -67,12 +67,12 @@ public class Main {
                 }
             }
             if (!foundedRepeat) {
-                numbersContainer.add(new NumberWithFrequency(num));
+                tmpArrayList.add(new NumberWithFrequency(num));
             }
         }
-        sortIntRateContainerListByRate(numbersContainer);
+        sortNumbersWithFrequency(tmpArrayList);
         array.clear();
-        for (NumberWithFrequency currentNum : numbersContainer) {
+        for (NumberWithFrequency currentNum : tmpArrayList) {
             while (currentNum.frequency-- > 0) {
                 array.add(currentNum.value);
             }
@@ -84,7 +84,7 @@ public class Main {
      *
      * @param arrayList ArrayList с объектами NumberWithFrequency
      */
-    private static void sortIntRateContainerListByRate(ArrayList<NumberWithFrequency> arrayList) {
+    private static void sortNumbersWithFrequency(ArrayList<NumberWithFrequency> arrayList) {
         NumberWithFrequency tmp;
         int start = 0;
         int end = arrayList.size() - 1;
@@ -110,7 +110,7 @@ public class Main {
 
 
     /**
-     * Метод для записи массива в текстовый файл output.txt
+     * Метод для записи списка в текстовый файл output.txt
      *
      * @param arrayList список, который нужно записать в текстовый файл
      */
