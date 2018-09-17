@@ -124,19 +124,4 @@ public class Main {
         }
     }
 
-    /**
-     * Класс объекта NumberWithFrequency, в котором хранится число и кол-во его повторений в списке.
-     */
-    private static class NumberWithFrequency {
-
-        int value; // само число
-
-        int frequency; // кол-во его повторений в списке
-
-        NumberWithFrequency(int value) {
-            this.frequency = 1;
-            this.value = value;
-        }
-    }
-
 }
